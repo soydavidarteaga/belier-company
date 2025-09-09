@@ -1,0 +1,131 @@
+{%- comment -%}
+  Footer section
+{%- endcomment -%}
+
+<footer class="footer" data-section-id="{{ section.id }}" data-section-type="footer">
+  <div class="page-width">
+    <div class="footer__content">
+      <div class="grid">
+        <div class="grid__item medium-up--one-quarter">
+          <div class="footer__block">
+            <h3 class="footer__title">{{ 'layout.footer.about_us' | t }}</h3>
+            <p class="footer__text">{{ section.settings.about_text | default: shop.description }}</p>
+          </div>
+        </div>
+        
+        <div class="grid__item medium-up--one-quarter">
+          <div class="footer__block">
+            <h3 class="footer__title">{{ 'layout.footer.quick_links' | t }}</h3>
+            {%- if section.settings.footer_menu != blank -%}
+              <ul class="footer__menu">
+                {%- for link in section.settings.footer_menu.links -%}
+                  <li class="footer__menu-item">
+                    <a href="{{ link.url }}" class="footer__menu-link">{{ link.title }}</a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </div>
+        </div>
+        
+        <div class="grid__item medium-up--one-quarter">
+          <div class="footer__block">
+            <h3 class="footer__title">{{ 'layout.footer.contact' | t }}</h3>
+            <div class="footer__contact">
+              {%- if shop.address != blank -%}
+                <p class="footer__address">{{ shop.address }}</p>
+              {%- endif -%}
+              {%- if shop.phone != blank -%}
+                <p class="footer__phone">
+                  <a href="tel:{{ shop.phone }}">{{ shop.phone }}</a>
+                </p>
+              {%- endif -%}
+              {%- if shop.email != blank -%}
+                <p class="footer__email">
+                  <a href="mailto:{{ shop.email }}">{{ shop.email }}</a>
+                </p>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+        
+        <div class="grid__item medium-up--one-quarter">
+          <div class="footer__block">
+            <h3 class="footer__title">{{ 'layout.footer.newsletter' | t }}</h3>
+            {%- if section.settings.show_newsletter -%}
+              <div class="footer__newsletter">
+                <p class="footer__newsletter-text">{{ section.settings.newsletter_text }}</p>
+                {%- form 'customer', id: 'footer-newsletter' -%}
+                  <input type="hidden" name="contact[tags]" value="newsletter">
+                  <div class="footer__newsletter-form">
+                    <input type="email" name="contact[email]" placeholder="{{ 'layout.footer.newsletter_placeholder' | t }}" class="footer__newsletter-input">
+                    <button type="submit" class="button button--primary">{{ 'layout.footer.newsletter_submit' | t }}</button>
+                  </div>
+                {%- endform -%}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer__bottom">
+        <div class="footer__copyright">
+          <p>{{ section.settings.footer_text | default: '© 2024 Belier Shop. All rights reserved.' }}</p>
+        </div>
+        <div class="footer__social">
+          {%- if settings.social_facebook_link != blank -%}
+            <a href="{{ settings.social_facebook_link }}" class="footer__social-link" aria-label="Facebook">
+              {% render 'icon-facebook' %}
+            </a>
+          {%- endif -%}
+          {%- if settings.social_instagram_link != blank -%}
+            <a href="{{ settings.social_instagram_link }}" class="footer__social-link" aria-label="Instagram">
+              {% render 'icon-instagram' %}
+            </a>
+          {%- endif -%}
+          {%- if settings.social_twitter_link != blank -%}
+            <a href="{{ settings.social_twitter_link }}" class="footer__social-link" aria-label="Twitter">
+              {% render 'icon-twitter' %}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "about_text",
+      "label": "About text"
+    },
+    {
+      "type": "link_list",
+      "id": "footer_menu",
+      "label": "Footer menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "Show newsletter signup",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "newsletter_text",
+      "label": "Newsletter text",
+      "default": "Subscribe to our newsletter for updates and exclusive offers."
+    },
+    {
+      "type": "text",
+      "id": "footer_text",
+      "label": "Footer text",
+      "default": "© 2024 Belier Shop. All rights reserved."
+    }
+  ]
+}
+{% endschema %}

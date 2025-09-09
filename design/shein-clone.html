@@ -1,0 +1,1071 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BELIER - Moda Online</title>
+  <link href="https://fonts.googleapis.com/css2?family=Antic+Didone&family=Clear+Sans:wght@300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <style>
+    :root {
+      --primary: #402C1A;
+      --secondary: #D9B19A;
+      --accent: #BFAB9F;
+      --success: #260101;
+      --bg: #fff;
+      --surface: #F8F9FA;
+      --text: #260101;
+      --text-muted: #BFAB9F;
+      --border: #D9B19A;
+      --shadow: rgba(64,44,26,0.08);
+      --black: #0D0D0D;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Antic Didone', 'Clear Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; height: auto; display: block; }
+    .container { width: min(1200px, 95%); margin: 0 auto; }
+    /* Header */
+    .header {
+      background: var(--bg);
+      box-shadow: 0 2px 10px var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-top {
+      background: var(--secondary);
+      color: var(--black);
+      padding: 8px 0;
+      font-size: 12px;
+      text-align: center;
+    }
+    .header-main {
+      padding: 16px 0;
+    }
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .logo {
+      font-family: 'Antic Didone', serif;
+      font-size: 56px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: var(--primary);
+      background: none;
+      -webkit-background-clip: unset;
+      -webkit-text-fill-color: unset;
+      background-clip: unset;
+    }
+    .search-bar {
+      flex: 1;
+      max-width: 500px;
+      position: relative;
+    }
+    .search-input {
+      width: 100%;
+      padding: 12px 50px 12px 16px;
+      border: 2px solid var(--border);
+      border-radius: 25px;
+      font-size: 14px;
+      transition: border-color 0.3s ease;
+      font-family: 'Clear Sans', sans-serif;
+    }
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    .search-btn {
+      position: absolute;
+      right: 4px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--primary);
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .header-actions {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    .action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 8px;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+      cursor: pointer;
+    }
+    .action-btn:hover {
+      background: var(--surface);
+    }
+    .action-icon {
+      font-size: 20px;
+    }
+    .action-text {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: 'Clear Sans', sans-serif;
+    }
+    .cart-count {
+      background: var(--primary);
+      color: white;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 10px;
+      position: absolute;
+      top: -5px;
+      right: -5px;
+    }
+    /* Navigation */
+    .nav {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+    .nav-list {
+      display: flex;
+      list-style: none;
+      overflow-x: auto;
+      padding: 0;
+      margin: 0;
+    }
+    .nav-item {
+      flex-shrink: 0;
+    }
+    .nav-link {
+      display: block;
+      padding: 16px 20px;
+      color: var(--primary);
+      font-weight: 500;
+      font-size: 14px;
+      transition: color 0.3s ease;
+      white-space: nowrap;
+      font-family: 'Clear Sans', sans-serif;
+    }
+    .nav-link:hover {
+      color: var(--secondary);
+    }
+    /* Hero Banner */
+    .hero {
+      position: relative;
+      height: 400px;
+      overflow: hidden;
+      margin-bottom: 30px;
+    }
+    .hero-slider {
+      display: flex;
+      width: 300%;
+      height: 100%;
+      transition: transform 0.5s ease;
+    }
+    .hero-slide {
+      flex: 0 0 33.333%;
+      height: 100%;
+      position: relative;
+    }
+    .hero-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .hero-dots {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .dot.active {
+      background: var(--primary);
+    }
+    /* Categories */
+    .categories {
+      padding: 40px 0;
+    }
+    .section-title {
+      font-family: 'Antic Didone', serif;
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-align: center;
+      color: var(--primary);
+    }
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+    }
+    .category-card {
+      text-align: center;
+      padding: 20px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px var(--shadow);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      border: 1px solid var(--border);
+    }
+    .category-card:hover {
+      transform: translateY(-5px);
+      background: var(--secondary);
+    }
+    .category-icon {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 12px;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: white;
+    }
+    .category-name {
+      font-weight: 600;
+      font-size: 14px;
+      font-family: 'Clear Sans', sans-serif;
+      color: var(--primary);
+    }
+    /* Products */
+    .products {
+      padding: 40px 0;
+    }
+    .products-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    .products-title {
+      font-family: 'Antic Didone', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .filter-tabs {
+      display: flex;
+      gap: 10px;
+    }
+    .filter-tab {
+      padding: 8px 16px;
+      background: var(--surface);
+      border: none;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Clear Sans', sans-serif;
+      color: var(--primary);
+    }
+    .filter-tab.active {
+      background: var(--secondary);
+      color: var(--primary);
+    }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .product-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px var(--shadow);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      border: 1px solid var(--border);
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+      background: var(--secondary);
+    }
+    .product-image {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      position: relative;
+    }
+    .product-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: var(--primary);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      font-family: 'Clear Sans', sans-serif;
+    }
+    .product-info {
+      padding: 16px;
+    }
+    .product-title {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      font-family: 'Antic Didone', serif;
+      color: var(--primary);
+    }
+    .product-price {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .current-price {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+      font-family: 'Antic Didone', serif;
+    }
+    .original-price {
+      font-size: 14px;
+      color: var(--accent);
+      text-decoration: line-through;
+      font-family: 'Clear Sans', sans-serif;
+    }
+    .discount {
+      background: var(--success);
+      color: white;
+      padding: 2px 6px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      font-family: 'Clear Sans', sans-serif;
+    }
+    .product-rating {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 12px;
+    }
+    .stars {
+      color: var(--accent);
+      font-size: 12px;
+    }
+    .rating-text {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: 'Clear Sans', sans-serif;
+    }
+    .add-to-cart {
+      width: 100%;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      font-family: 'Clear Sans', sans-serif;
+    }
+    .add-to-cart:hover {
+      background: var(--secondary);
+      color: var(--primary);
+    }
+    /* Promotions */
+    .promotions {
+      padding: 40px 0;
+      background: linear-gradient(90deg, #D9B19A 0%, #BFAB9F 100%);
+      position: relative;
+    }
+    .promo-carousel {
+      display: flex;
+      overflow-x: auto;
+      gap: 30px;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 10px;
+    }
+    .promo-card {
+      min-width: 340px;
+      flex: 0 0 340px;
+      scroll-snap-align: start;
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(64,44,26,0.15);
+      position: relative;
+      border: 3px solid #402C1A;
+      transition: transform 0.3s, box-shadow 0.3s;
+      animation: promoPop 0.8s cubic-bezier(.68,-0.55,.27,1.55) both;
+    }
+    .promo-card:hover {
+      transform: scale(1.04);
+      box-shadow: 0 8px 32px rgba(64,44,26,0.25);
+    }
+    @keyframes promoPop {
+      0% { transform: scale(0.9); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .promo-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      filter: brightness(0.95) contrast(1.1);
+    }
+    .promo-content {
+      padding: 30px 20px 20px 20px;
+      position: relative;
+    }
+    .promo-title {
+      font-family: 'Antic Didone', serif;
+      font-size: 28px;
+      font-weight: 900;
+      margin-bottom: 10px;
+      color: #402C1A;
+      letter-spacing: 0.05em;
+      text-shadow: 0 2px 8px #D9B19A;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .promo-title .fa-bolt {
+      color: #BFAB9F;
+      font-size: 32px;
+      animation: flash 1.2s infinite alternate;
+    }
+    @keyframes flash {
+      0% { filter: brightness(1); }
+      100% { filter: brightness(1.5); }
+    }
+    .promo-description {
+      color: #260101;
+      margin-bottom: 18px;
+      font-size: 18px;
+      font-family: 'Clear Sans', sans-serif;
+      font-weight: 500;
+    }
+    .promo-btn {
+      background: #402C1A;
+      color: #fff;
+      padding: 14px 32px;
+      border: none;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 18px;
+      cursor: pointer;
+      font-family: 'Clear Sans', sans-serif;
+      box-shadow: 0 2px 8px #BFAB9F;
+      transition: background 0.3s;
+    }
+    .promo-btn:hover {
+      background: #BFAB9F;
+      color: #402C1A;
+    }
+    /* Footer */
+    .footer {
+      background: var(--primary);
+      color: white;
+      padding: 40px 0 20px;
+    }
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+    .footer-section h3 {
+      font-family: 'Antic Didone', serif;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--secondary);
+    }
+    .footer-section ul {
+      list-style: none;
+    }
+    .footer-section li {
+      margin-bottom: 8px;
+    }
+    .footer-section a {
+      color: #ccc;
+      font-size: 14px;
+      transition: color 0.3s ease;
+      font-family: 'Clear Sans', sans-serif;
+    }
+    .footer-section a:hover {
+      color: var(--secondary);
+    }
+    .footer-bottom {
+      border-top: 1px solid #444;
+      padding-top: 20px;
+      text-align: center;
+      color: #ccc;
+      font-size: 14px;
+      font-family: 'Clear Sans', sans-serif;
+    }
+    /* Mobile */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-wrap: wrap;
+      }
+      .search-bar {
+        order: 3;
+        width: 100%;
+        margin-top: 16px;
+      }
+      .hero-title {
+        font-size: 32px;
+      }
+      .hero-content {
+        left: 20px;
+      }
+      .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+      }
+      .product-image {
+        height: 200px;
+      }
+      .nav-list {
+        padding: 0 16px;
+      }
+    }
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in {
+      animation: fadeIn 0.6s ease forwards;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-top">
+      🌿 Envío GRATIS en compras superiores a $50 | BELIER Cosmética Artesanal
+    </div>
+    <div class="container">
+      <div class="header-content">
+        <a href="#" class="logo">BELIER</a>
+        <div class="search-bar">
+          <input type="text" class="search-input" placeholder="Buscar productos...">
+          <button class="search-btn">🔍</button>
+        </div>
+        <div class="header-actions">
+          <div class="action-btn">
+            <div class="action-icon"><i class="fa-solid fa-user" style="color:#402C1A;"></i></div>
+            <div class="action-text">Mi Cuenta</div>
+          </div>
+          <div class="action-btn">
+            <div class="action-icon"><i class="fa-solid fa-heart" style="color:#402C1A;"></i></div>
+            <div class="action-text">Favoritos</div>
+          </div>
+          <div class="action-btn" style="position: relative;">
+            <div class="action-icon"><i class="fa-solid fa-cart-shopping" style="color:#402C1A;"></i></div>
+            <div class="action-text">Carrito</div>
+            <div class="cart-count">3</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <ul class="nav-list">
+      <li class="nav-item"><a href="#" class="nav-link">Mujer</a></li>
+      <li class="nav-item"><a href="#" class="nav-link">Hombre</a></li>
+      <li class="nav-item"><a href="#" class="nav-link">Niños</a></li>
+      <li class="nav-item"><a href="#" class="nav-link">Zapatos</a></li>
+      <li class="nav-item"><a href="#" class="nav-link">Accesorios</a></li>
+      <li class="nav-item"><a href="#" class="nav-link">Bolsos</a></li>
+      <li class="nav-item"><a href="#" class="nav-link">Belleza</a></li>
+      <li class="nav-item"><a href="#" class="nav-link">Hogar</a></li>
+      <li class="nav-item"><a href="#" class="nav-link">Deportes</a></li>
+      <li class="nav-item"><a href="#" class="nav-link">Outlet</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Banner -->
+  <section class="hero">
+    <div class="hero-slider" id="heroSlider">
+      <div class="hero-slide">
+        <img src="./banners/BANNER 01.jpg" alt="Banner 1">
+      </div>
+      <div class="hero-slide">
+        <img src="./banners/BANNER 02.jpg" alt="Banner 2">
+      </div>
+      <div class="hero-slide">
+        <img src="./banners/BANNER 03.jpg" alt="Banner 3">
+      </div>
+    </div>
+    <div class="hero-dots">
+      <div class="dot active" data-slide="0"></div>
+      <div class="dot" data-slide="1"></div>
+      <div class="dot" data-slide="2"></div>
+    </div>
+  </section>
+
+  <main class="container">
+    <!-- Categories -->
+    <section class="categories">
+      <h2 class="section-title">Categorías Populares</h2>
+      <div class="categories-grid">
+        <div class="category-card fade-in">
+          <div class="category-icon"><i class="fa-solid fa-bed" style="font-size:32px;color:#402C1A;"></i></div>
+          <div class="category-name">Pijamas</div>
+        </div>
+        <div class="category-card fade-in">
+          <div class="category-icon"><i class="fa-solid fa-heart" style="font-size:32px;color:#402C1A;"></i></div>
+          <div class="category-name">Lencería</div>
+        </div>
+        <div class="category-card fade-in">
+          <div class="category-icon"><i class="fa-solid fa-fire" style="font-size:32px;color:#402C1A;"></i></div>
+          <div class="category-name">Eróticos</div>
+        </div>
+        <div class="category-card fade-in">
+          <div class="category-icon"><i class="fa-solid fa-venus-mars" style="font-size:32px;color:#402C1A;"></i></div>
+          <div class="category-name">Sex shop</div>
+        </div>
+        <div class="category-card fade-in">
+          <div class="category-icon"><i class="fa-solid fa-shirt" style="font-size:32px;color:#402C1A;"></i></div>
+          <div class="category-name">Ropa</div>
+        </div>
+        <div class="category-card fade-in">
+          <div class="category-icon"><i class="fa-solid fa-gem" style="font-size:32px;color:#402C1A;"></i></div>
+          <div class="category-name">Accesorios</div>
+        </div>
+        <div class="category-card fade-in">
+          <div class="category-icon"><i class="fa-solid fa-umbrella-beach" style="font-size:32px;color:#402C1A;"></i></div>
+          <div class="category-name">Playero</div>
+        </div>
+        <div class="category-card fade-in">
+          <div class="category-icon"><i class="fa-solid fa-dumbbell" style="font-size:32px;color:#402C1A;"></i></div>
+          <div class="category-name">Deportes</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Promotions -->
+  <section class="promotions">
+    <div class="container">
+      <h2 class="section-title">Ofertas Especiales</h2>
+      <div class="promo-carousel">
+        <div class="promo-card fade-in">
+          <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=600&auto=format&fit=crop" alt="Promo" class="promo-image">
+          <div class="promo-content">
+            <h3 class="promo-title"><i class="fa-solid fa-bolt"></i> Flash Sale - Solo Hoy</h3>
+            <p class="promo-description">🔥 Hasta <b>80% de descuento</b> en seleccionados. ¡No te lo pierdas!</p>
+            <button class="promo-btn">Comprar Ahora</button>
+          </div>
+        </div>
+        <div class="promo-card fade-in">
+          <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=600&auto=format&fit=crop" alt="Promo" class="promo-image">
+          <div class="promo-content">
+            <h3 class="promo-title"><i class="fa-solid fa-bolt"></i> Envío Gratis</h3>
+            <p class="promo-description">🚚 En compras superiores a <b>$50</b>. Válido por tiempo limitado.</p>
+            <button class="promo-btn">Ver Condiciones</button>
+          </div>
+        </div>
+        <div class="promo-card fade-in">
+          <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=600&auto=format&fit=crop" alt="Promo" class="promo-image">
+          <div class="promo-content">
+            <h3 class="promo-title"><i class="fa-solid fa-bolt"></i> Nueva Colección</h3>
+            <p class="promo-description">✨ Descubre las <b>últimas tendencias</b> de la temporada.</p>
+            <button class="promo-btn">Explorar</button>
+          </div>
+        </div>
+        <div class="promo-card fade-in">
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=600&auto=format&fit=crop" alt="Promo" class="promo-image">
+          <div class="promo-content">
+            <h3 class="promo-title"><i class="fa-solid fa-bolt"></i> 2x1 en Lencería</h3>
+            <p class="promo-description">💖 Compra 1 y lleva 2 en productos seleccionados.</p>
+            <button class="promo-btn">Ver Productos</button>
+          </div>
+        </div>
+        <div class="promo-card fade-in">
+          <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?q=80&w=600&auto=format&fit=crop" alt="Promo" class="promo-image">
+          <div class="promo-content">
+            <h3 class="promo-title"><i class="fa-solid fa-bolt"></i> Outlet Erótico</h3>
+            <p class="promo-description">🔥 Descuentos exclusivos en la categoría Eróticos.</p>
+            <button class="promo-btn">Descubrir</button>
+          </div>
+        </div>
+        <div class="promo-card fade-in">
+          <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?q=80&w=600&auto=format&fit=crop" alt="Promo" class="promo-image">
+          <div class="promo-content">
+            <h3 class="promo-title"><i class="fa-solid fa-bolt"></i> Playero Sale</h3>
+            <p class="promo-description">🏖️ Hasta <b>60% OFF</b> en productos de playa.</p>
+            <button class="promo-btn">Ver Ofertas</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+    <!-- Products -->
+    <section class="products">
+      <div class="products-header">
+        <h2 class="products-title">Productos Destacados</h2>
+        <div class="filter-tabs">
+          <button class="filter-tab active">Todos</button>
+          <button class="filter-tab">Nuevos</button>
+          <button class="filter-tab">Ofertas</button>
+          <button class="filter-tab">Más Vendidos</button>
+        </div>
+      </div>
+      <div class="products-grid">
+        <div class="product-card fade-in">
+          <div class="product-image">
+            <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=400&auto=format&fit=crop" alt="Producto">
+            <div class="product-badge">NUEVO</div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">Vestido Floral de Verano con Estampado</h3>
+            <div class="product-price">
+              <span class="current-price">$24.99</span>
+              <span class="original-price">$49.99</span>
+              <span class="discount">-50%</span>
+            </div>
+            <div class="product-rating">
+              <div class="stars">⭐⭐⭐⭐⭐</div>
+              <span class="rating-text">(1,234)</span>
+            </div>
+            <button class="add-to-cart">Agregar al Carrito</button>
+          </div>
+        </div>
+        
+        <div class="product-card fade-in">
+          <div class="product-image">
+            <img src="https://images.unsplash.com/photo-1571945153237-4929e783af4a?q=80&w=400&auto=format&fit=crop" alt="Producto">
+            <div class="product-badge">HOT</div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">Top de Encaje Elegante para Mujer</h3>
+            <div class="product-price">
+              <span class="current-price">$18.99</span>
+              <span class="original-price">$29.99</span>
+              <span class="discount">-37%</span>
+            </div>
+            <div class="product-rating">
+              <div class="stars">⭐⭐⭐⭐⭐</div>
+              <span class="rating-text">(856)</span>
+            </div>
+            <button class="add-to-cart">Agregar al Carrito</button>
+          </div>
+        </div>
+        
+        <div class="product-card fade-in">
+          <div class="product-image">
+            <img src="https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?q=80&w=400&auto=format&fit=crop" alt="Producto">
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">Jeans Skinny de Tiro Alto</h3>
+            <div class="product-price">
+              <span class="current-price">$32.99</span>
+              <span class="original-price">$45.99</span>
+              <span class="discount">-28%</span>
+            </div>
+            <div class="product-rating">
+              <div class="stars">⭐⭐⭐⭐⭐</div>
+              <span class="rating-text">(2,156)</span>
+            </div>
+            <button class="add-to-cart">Agregar al Carrito</button>
+          </div>
+        </div>
+        
+        <div class="product-card fade-in">
+          <div class="product-image">
+            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=400&auto=format&fit=crop" alt="Producto">
+            <div class="product-badge">LIMITED</div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">Zapatillas Deportivas Unisex</h3>
+            <div class="product-price">
+              <span class="current-price">$45.99</span>
+              <span class="original-price">$69.99</span>
+              <span class="discount">-34%</span>
+            </div>
+            <div class="product-rating">
+              <div class="stars">⭐⭐⭐⭐⭐</div>
+              <span class="rating-text">(3,421)</span>
+            </div>
+            <button class="add-to-cart">Agregar al Carrito</button>
+          </div>
+        </div>
+        
+        <div class="product-card fade-in">
+          <div class="product-image">
+            <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=400&auto=format&fit=crop" alt="Producto">
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">Bolso de Mano Elegante</h3>
+            <div class="product-price">
+              <span class="current-price">$28.99</span>
+              <span class="original-price">$39.99</span>
+              <span class="discount">-28%</span>
+            </div>
+            <div class="product-rating">
+              <div class="stars">⭐⭐⭐⭐⭐</div>
+              <span class="rating-text">(987)</span>
+            </div>
+            <button class="add-to-cart">Agregar al Carrito</button>
+          </div>
+        </div>
+        
+        <div class="product-card fade-in">
+          <div class="product-image">
+            <img src="https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?q=80&w=400&auto=format&fit=crop" alt="Producto">
+            <div class="product-badge">SALE</div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">Chaqueta de Cuero Sintético</h3>
+            <div class="product-price">
+              <span class="current-price">$55.99</span>
+              <span class="original-price">$79.99</span>
+              <span class="discount">-30%</span>
+            </div>
+            <div class="product-rating">
+              <div class="stars">⭐⭐⭐⭐⭐</div>
+              <span class="rating-text">(1,543)</span>
+            </div>
+            <button class="add-to-cart">Agregar al Carrito</button>
+          </div>
+        </div>
+        
+        <div class="product-card fade-in">
+          <div class="product-image">
+            <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=400&auto=format&fit=crop" alt="Producto">
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">Falda Plisada de Moda</h3>
+            <div class="product-price">
+              <span class="current-price">$22.99</span>
+              <span class="original-price">$34.99</span>
+              <span class="discount">-34%</span>
+            </div>
+            <div class="product-rating">
+              <div class="stars">⭐⭐⭐⭐⭐</div>
+              <span class="rating-text">(756)</span>
+            </div>
+            <button class="add-to-cart">Agregar al Carrito</button>
+          </div>
+        </div>
+        
+        <div class="product-card fade-in">
+          <div class="product-image">
+            <img src="https://images.unsplash.com/photo-1571945153237-4929e783af4a?q=80&w=400&auto=format&fit=crop" alt="Producto">
+            <div class="product-badge">NEW</div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">Blusa de Seda Premium</h3>
+            <div class="product-price">
+              <span class="current-price">$35.99</span>
+              <span class="original-price">$49.99</span>
+              <span class="discount">-28%</span>
+            </div>
+            <div class="product-rating">
+              <div class="stars">⭐⭐⭐⭐⭐</div>
+              <span class="rating-text">(432)</span>
+            </div>
+            <button class="add-to-cart">Agregar al Carrito</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Comprar</h3>
+          <ul>
+            <li><a href="#">Mujer</a></li>
+            <li><a href="#">Hombre</a></li>
+            <li><a href="#">Niños</a></li>
+            <li><a href="#">Zapatos</a></li>
+            <li><a href="#">Accesorios</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Servicio al Cliente</h3>
+          <ul>
+            <li><a href="#">Centro de Ayuda</a></li>
+            <li><a href="#">Envíos</a></li>
+            <li><a href="#">Devoluciones</a></li>
+            <li><a href="#">Tamaños</a></li>
+            <li><a href="#">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Empresa</h3>
+          <ul>
+            <li><a href="#">Sobre SHEIN</a></li>
+            <li><a href="#">Carreras</a></li>
+            <li><a href="#">Prensa</a></li>
+            <li><a href="#">Sostenibilidad</a></li>
+            <li><a href="#">Inversores</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Síguenos</h3>
+          <ul>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">TikTok</a></li>
+            <li><a href="#">YouTube</a></li>
+            <li><a href="#">Pinterest</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 SHEIN. Todos los derechos reservados. | Términos y Condiciones | Política de Privacidad</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Hero Slider
+    let currentSlide = 0;
+    const slider = document.getElementById('heroSlider');
+    const dots = document.querySelectorAll('.dot');
+    const totalSlides = 3;
+
+    function showSlide(index) {
+      slider.style.transform = `translateX(-${index * 33.333}%)`;
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % totalSlides;
+      showSlide(currentSlide);
+    }
+
+    // Auto-slide every 4 seconds
+    setInterval(nextSlide, 4000);
+
+    // Dot navigation
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        currentSlide = index;
+        showSlide(currentSlide);
+      });
+    });
+
+    // Filter tabs
+    const filterTabs = document.querySelectorAll('.filter-tab');
+    filterTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        filterTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+      });
+    });
+
+    // Add to cart functionality
+    const addToCartBtns = document.querySelectorAll('.add-to-cart');
+    addToCartBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        btn.textContent = 'Agregado ✓';
+        btn.style.background = '#2ed573';
+        setTimeout(() => {
+          btn.textContent = 'Agregar al Carrito';
+          btn.style.background = '';
+        }, 2000);
+      });
+    });
+
+    // Search functionality
+    const searchInput = document.querySelector('.search-input');
+    const searchBtn = document.querySelector('.search-btn');
+    
+    function performSearch() {
+      const query = searchInput.value.trim();
+      if (query) {
+        alert(`Buscando: "${query}"`);
+      }
+    }
+
+    searchBtn.addEventListener('click', performSearch);
+    searchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        performSearch();
+      }
+    });
+
+    // Scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Mobile menu toggle (if needed)
+    const mobileMenuBtn = document.createElement('button');
+    mobileMenuBtn.innerHTML = '☰';
+    mobileMenuBtn.style.display = 'none';
+    mobileMenuBtn.style.background = 'none';
+    mobileMenuBtn.style.border = 'none';
+    mobileMenuBtn.style.fontSize = '24px';
+    mobileMenuBtn.style.cursor = 'pointer';
+
+    // Show mobile menu button on small screens
+    if (window.innerWidth <= 768) {
+      mobileMenuBtn.style.display = 'block';
+    }
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth <= 768) {
+        mobileMenuBtn.style.display = 'block';
+      } else {
+        mobileMenuBtn.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>

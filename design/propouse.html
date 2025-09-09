@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tienda Minimal – Propuesta 1</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --accent: #0ea5e9;
+      --accent-2: #22c55e;
+      --accent-3: #f43f5e;
+      --border: #e2e8f0;
+      --chip: #f8fafc;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text); background: var(--bg); line-height: 1.5;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    /* Navbar */
+    .container { width: min(1200px, 92%); margin: 0 auto; }
+    .nav { position: sticky; top: 0; backdrop-filter: saturate(180%) blur(8px); background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7)); border-bottom: 1px solid var(--border); z-index: 10; }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+    .brand { font-weight: 700; letter-spacing: .04em; }
+    .links { display: flex; gap: 18px; }
+    .links a { color: var(--muted); font-size: 14px; display: inline-flex; align-items: center; gap: 8px; }
+    .actions { display: flex; gap: 10px; }
+    .btn { padding: 10px 14px; border: 1px solid var(--border); border-radius: 999px; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; }
+    .btn--primary { background: linear-gradient(180deg, #111827, #0f172a); color: #fff; border-color: var(--text); }
+    .icon { width: 16px; height: 16px; display: inline-block; }
+
+    /* Hero */
+    .hero { position: relative; border-bottom: 1px solid var(--border); }
+    .hero-bleed { width: 100vw; margin-left: 50%; transform: translateX(-50%); }
+    .hero-wrap { position: relative; min-height: clamp(360px, 48vw, 560px); }
+    .slider { position: relative; overflow: hidden; height: 100%; }
+    .slides { display: flex; width: 300%; height: 100%; transition: transform .6s ease; }
+    .slide { flex: 0 0 100%; height: 100%; }
+    .slide img { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .eyebrow { color: var(--accent); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; font-size: 12px; }
+    h1 { font-size: clamp(28px, 4.2vw, 52px); margin: 8px 0 14px; line-height: 1.1; }
+    .lead { color: var(--muted); font-size: 16px; max-width: 52ch; }
+    .hero-cta { margin-top: 22px; display: flex; gap: 10px; }
+    .hero img { border-radius: 14px; }
+
+    /* Categorías */
+    .section { padding: 52px 0; }
+    .section h2 { font-size: 26px; margin: 0 0 18px; }
+    .categories { display: grid; grid-template-columns: 1.2fr .8fr 1fr 1fr; gap: 14px; }
+    .cat { border: 1px solid var(--border); border-radius: 12px; padding: 18px; display: grid; gap: 10px; transition: transform .2s ease, box-shadow .2s ease; background: linear-gradient(180deg, #fff, #fafcff); }
+    .cat:hover { transform: translateY(-2px); }
+    .cat img { border-radius: 8px; }
+    .cat span { color: var(--muted); font-size: 14px; }
+    .chip { display: inline-flex; align-items: center; gap: 6px; background: var(--chip); border: 1px solid var(--border); color: var(--muted); padding: 6px 10px; border-radius: 999px; font-size: 12px; }
+
+    /* Promociones */
+    .promo { background: linear-gradient(135deg, rgba(14,165,233,.12), rgba(34,197,94,.12)); border: 1px solid var(--border); border-radius: 14px; padding: 22px; display: grid; grid-template-columns: 1fr 2fr; gap: 18px; align-items: center; }
+    .promo strong { font-size: 20px; display: inline-flex; align-items: center; gap: 8px; }
+    .promo p { margin: 6px 0 0; color: var(--muted); }
+
+    /* Productos destacados */
+    .products { display: grid; grid-template-columns: 1.2fr 1fr 1fr 1.1fr; gap: 16px; }
+    .card { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: #fff; display: grid; gap: 10px; position: relative; }
+    .card .info { padding: 12px; display: grid; gap: 6px; }
+    .price { display: flex; gap: 8px; align-items: baseline; }
+    .price s { color: var(--muted); font-size: 13px; }
+    .add { margin-top: 6px; display: inline-flex; align-items: center; gap: 8px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; }
+    .badge-off { position: absolute; top: 10px; left: 10px; background: #eefdf3; color: #15803d; border: 1px solid #bbf7d0; font-weight: 700; font-size: 12px; padding: 6px 8px; border-radius: 999px; }
+
+    /* Galería */
+    .gallery { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+    .gallery img { border-radius: 10px; height: 160px; object-fit: cover; width: 100%; }
+    .gallery .wide { grid-column: span 2; }
+    .gallery .tall { grid-row: span 2; height: 330px; }
+
+    /* Features */
+    .features { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .feature { border: 1px solid var(--border); border-radius: 12px; padding: 18px; background: linear-gradient(180deg, #fff, #fbfdff); display: grid; gap: 6px; }
+    .feature b { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 2px; }
+    .feature p { margin: 0; color: var(--muted); }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--border); padding: 28px 0; color: var(--muted); font-size: 14px; }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .categories, .products { grid-template-columns: repeat(2, 1fr); }
+      .gallery { grid-template-columns: repeat(3, 1fr); }
+      .features { grid-template-columns: repeat(2, 1fr); }
+      .promo { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .categories, .products, .gallery, .features { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#">BELIER</a>
+      <div class="links">
+        <a href="#categorias"><svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M4 6h6v6H4V6zm10 0h6v6h-6V6zM4 16h6v6H4v-6zm10 0h6v6h-6v-6z" fill="currentColor"/></svg>Categorías</a>
+        <a href="#promos"><svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M12 3l2.4 4.86 5.36.78-3.88 3.78.92 5.35L12 15.9 7.2 17.77l.92-5.35L4.24 8.64l5.36-.78L12 3z" fill="currentColor"/></svg>Promos</a>
+        <a href="#destacados"><svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M3 12h18M12 3v18" stroke="currentColor" stroke-width="2"/></svg>Destacados</a>
+        <a href="#galeria"><svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M4 5h16v14H4z" stroke="currentColor" stroke-width="2"/><path d="M8 13l3-3 5 6H6l2-3z" fill="currentColor"/></svg>Galería</a>
+      </div>
+      <div class="actions">
+        <a class="btn" href="#buscar"><svg class="icon" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2"/></svg>Buscar</a>
+        <a class="btn btn--primary" href="#carrito"><svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M6 6h14l-2 9H8L6 6z" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="19" r="1.5" fill="#fff"/><circle cx="17" cy="19" r="1.5" fill="#fff"/></svg>Carrito</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero hero-bleed">
+    <div class="hero-wrap">
+      <div class="slider">
+        <div class="slides">
+          <div class="slide"><img src="./banners/BANNER 01.jpg" alt="Banner 01" /></div>
+          <div class="slide"><img src="./banners/BANNER 02.jpg" alt="Banner 02" /></div>
+          <div class="slide"><img src="./banners/BANNER 03.jpg" alt="Banner 03" /></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <script>
+    (function(){
+      const root = document.currentScript.closest('body');
+      const slider = root.querySelector('.slides');
+      if(!slider) return;
+      let index = 0;
+      const total = slider.children.length;
+      const tick = () => {
+        index = (index + 1) % total;
+        slider.style.transform = `translateX(-${index * 100}%)`;
+      };
+      setInterval(tick, 4000);
+    })();
+  </script>
+
+  <main class="container">
+    <!-- Categorías -->
+    <section id="categorias" class="section">
+      <h2>Categorías</h2>
+      <div class="categories">
+        <a class="cat" href="#">
+          <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800&auto=format&fit=crop" alt="Ropa" />
+          <b><span class="chip"><svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M4 8l8-5 8 5v8l-8 5-8-5V8z" stroke="currentColor"/></svg>Textil</span> Ropa</b>
+          <span>Esenciales de temporada</span>
+        </a>
+        <a class="cat" href="#">
+          <img src="https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?q=80&w=800&auto=format&fit=crop" alt="Accesorios" />
+          <b><span class="chip"><svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M12 3a4 4 0 110 8 4 4 0 010-8zM3 21a9 9 0 0118 0" stroke="currentColor"/></svg>Mix</span> Accesorios</b>
+          <span>Detalles que importan</span>
+        </a>
+        <a class="cat" href="#">
+          <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800&auto=format&fit=crop" alt="Calzado" />
+          <b><span class="chip"><svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M3 14s2-2 6-2 6 2 6 2l6 1v3H3v-4z" stroke="currentColor"/></svg>Comfy</span> Calzado</b>
+          <span>Comodidad y estilo</span>
+        </a>
+        <a class="cat" href="#">
+          <img src="https://images.unsplash.com/photo-1520975954732-35dd222996f2?q=80&w=800&auto=format&fit=crop" alt="Hogar" />
+          <b><span class="chip"><svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-7 9 7v9H3v-9z" stroke="currentColor"/></svg>Casa</span> Hogar</b>
+          <span>Minimal en casa</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Promociones u Ofertas -->
+    <section id="promos" class="section">
+      <div class="promo">
+        <div>
+          <strong><svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M12 2l3 7h7l-5.5 4.1L18 21l-6-4-6 4 1.5-7.9L2 9h7l3-7z" fill="currentColor"/></svg> Sale de mitad de temporada</strong>
+          <p>Hasta 40% en seleccionados. Envío gratis desde $80.</p>
+        </div>
+        <div>
+          <a class="btn btn--primary" href="#">Ver ofertas</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Productos destacados -->
+    <section id="destacados" class="section">
+      <h2>Productos destacados</h2>
+      <div class="products">
+        <article class="card">
+          <div class="badge-off"><svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M4 12h16" stroke="currentColor"/><circle cx="12" cy="12" r="9" stroke="currentColor"/></svg> -25%</div>
+          <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=800&auto=format&fit=crop" alt="Producto" />
+          <div class="info">
+            <b>Camiseta Premium</b>
+            <div class="price"><strong>$29.90</strong> <s>$39.90</s></div>
+            <a class="add" href="#"><svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2"/></svg>Agregar</a>
+          </div>
+        </article>
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1518110833785-3d3563a94f49?q=80&w=800&auto=format&fit=crop" alt="Producto" />
+          <div class="info">
+            <b>Bolso Minimal</b>
+            <div class="price"><strong>$69.00</strong></div>
+            <a class="add" href="#"><svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2"/></svg>Agregar</a>
+          </div>
+        </article>
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=800&auto=format&fit=crop" alt="Producto" />
+          <div class="info">
+            <b>Zapatilla Daily</b>
+            <div class="price"><strong>$89.00</strong> <s>$99.00</s></div>
+            <a class="add" href="#"><svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2"/></svg>Agregar</a>
+          </div>
+        </article>
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1512446816042-444d6412671b?q=80&w=800&auto=format&fit=crop" alt="Producto" />
+          <div class="info">
+            <b>Reloj Acero</b>
+            <div class="price"><strong>$129.00</strong></div>
+            <a class="add" href="#"><svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2"/></svg>Agregar</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Galería de imagen -->
+    <section id="galeria" class="section">
+      <h2>Galería</h2>
+      <div class="gallery">
+        <img class="wide" src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=1200&auto=format&fit=crop" alt="galeria" />
+        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800&auto=format&fit=crop" alt="galeria" />
+        <img class="tall" src="https://images.unsplash.com/photo-1539533113208-f6df8cc8b543?q=80&w=800&auto=format&fit=crop" alt="galeria" />
+        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=800&auto=format&fit=crop" alt="galeria" />
+        <img class="wide" src="https://images.unsplash.com/photo-1542996966-2e31e00cda2a?q=80&w=1200&auto=format&fit=crop" alt="galeria" />
+        <img src="https://images.unsplash.com/photo-1585386959984-a41552231658?q=80&w=800&auto=format&fit=crop" alt="galeria" />
+      </div>
+    </section>
+
+    <!-- Características de la tienda -->
+    <section class="section">
+      <h2>Lo que nos hace diferentes</h2>
+      <div class="features">
+        <div class="feature">
+          <b><svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M3 6h11v10H3zM14 10h5l2 3v3h-7v-6z" stroke="currentColor"/></svg> Envíos en 24/48h</b>
+          <p>Rápido y seguro a todo el país.</p>
+        </div>
+        <div class="feature">
+          <b><svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M19 12l-7-7-7 7" stroke="currentColor"/></svg> Devoluciones fáciles</b>
+          <p>30 días para cambios o reembolsos.</p>
+        </div>
+        <div class="feature">
+          <b><svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M12 3l8 4v5c0 5-3.6 8.3-8 9-4.4-.7-8-4-8-9V7l8-4z" stroke="currentColor"/></svg> Pago protegido</b>
+          <p>Tus datos siempre seguros.</p>
+        </div>
+        <div class="feature">
+          <b><svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M12 2l3 7h7l-5.5 4.1L18 21l-6-4-6 4 1.5-7.9L2 9h7l3-7z" stroke="currentColor"/></svg> Materiales responsables</b>
+          <p>Diseño consciente y duradero.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      © 2025 BELIER. Todos los derechos reservados.
+    </div>
+  </footer>
+</body>
+</html>
+
+

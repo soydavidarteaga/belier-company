@@ -1,0 +1,133 @@
+/* Footer styles */
+.footer {
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+  padding: 4rem 0 2rem;
+  margin-top: 4rem;
+}
+
+.footer__content {
+  margin-bottom: 2rem;
+}
+
+.footer__block {
+  margin-bottom: 2rem;
+}
+
+.footer__title {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: var(--color-secondary);
+}
+
+.footer__text {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.footer__menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer__menu-item {
+  margin-bottom: 0.5rem;
+}
+
+.footer__menu-link {
+  color: var(--color-secondary);
+  transition: color 0.3s ease;
+}
+
+.footer__menu-link:hover {
+  color: var(--color-accent);
+}
+
+.footer__contact p {
+  margin-bottom: 0.5rem;
+}
+
+.footer__contact a {
+  color: var(--color-secondary);
+  transition: color 0.3s ease;
+}
+
+.footer__contact a:hover {
+  color: var(--color-accent);
+}
+
+.footer__newsletter-text {
+  margin-bottom: 1rem;
+}
+
+.footer__newsletter-form {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.footer__newsletter-input {
+  flex: 1;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1.4rem;
+}
+
+.footer__newsletter-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.footer__bottom {
+  border-top: 1px solid #333;
+  padding-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer__copyright p {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.footer__social {
+  display: flex;
+  gap: 1rem;
+}
+
+.footer__social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-accent);
+  color: var(--color-secondary);
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.footer__social-link:hover {
+  background-color: var(--color-secondary);
+  color: var(--color-primary);
+}
+
+/* Responsive footer */
+@media screen and (max-width: 749px) {
+  .footer {
+    padding: 2rem 0 1rem;
+  }
+  
+  .footer__bottom {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .footer__newsletter-form {
+    flex-direction: column;
+  }
+}

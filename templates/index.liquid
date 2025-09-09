@@ -1,0 +1,22 @@
+{%- comment -%}
+  This is the main index page template
+{%- endcomment -%}
+
+<div class="page-width">
+  <div class="grid">
+    <div class="grid__item">
+      <div class="section-header text-center">
+        <h1 class="section-header__title h2">{{ page_title }}</h1>
+        {% if page_description != blank %}
+          <div class="section-header__description">{{ page_description }}</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% section 'featured-collection' %}
+{% section 'image-with-text' %}
+{% section 'rich-text' %}
+{% section 'collection-list' %}
+{% section 'newsletter' %}

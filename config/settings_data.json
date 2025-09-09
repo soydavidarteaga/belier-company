@@ -1,0 +1,24 @@
+{
+  "current": {
+    "primary_color": "#000000",
+    "secondary_color": "#ffffff",
+    "accent_color": "#ff6b35",
+    "heading_font": "helvetica_n4",
+    "body_font": "helvetica_n4",
+    "logo_max_width": 100,
+    "footer_text": "© 2024 Belier Shop. All rights reserved.",
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+        }
+      }
+    },
+    "content_for_index": []
+  }
+}
