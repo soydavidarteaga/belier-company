@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ shop.name }} - Moda Online</title>
+    {{ content_for_header }}
     <link href="https://fonts.googleapis.com/css2?family=Antic+Didone&family=Clear+Sans:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <link rel="stylesheet" href="{{ 'styles.css' | asset_url }}">
@@ -14,12 +15,12 @@
     {% section 'hero' %}
     <main class="container">
       {% section 'categories' %}
+      {% section 'products' %}
     </main>
     {% section 'promotions' %}
     <main class="container">
-      {% section 'products' %}
-    </main>
-    {% section 'footer' %}
+      {% section 'footer' %}
+    {{ content_for_layout }}
     <script src="{{ 'scripts.js' | asset_url }}"></script>
   </body>
 </html>

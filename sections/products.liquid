@@ -1,0 +1,62 @@
+{% if section.settings.collection != blank and collections[section.settings.collection].products_count > 0 %}
+  <section class="products">
+    <div class="products-header">
+      <h2 class="products-title">{{ section.settings.title }}</h2>
+      <div class="filter-tabs">
+        <button class="filter-tab active">Todos</button>
+        <button class="filter-tab">Nuevos</button>
+        <button class="filter-tab">Ofertas</button>
+        <button class="filter-tab">Más Vendidos</button>
+      </div>
+    </div>
+    <div class="products-grid">
+      {% for product in collections[section.settings.collection].products %}
+        <div class="product-card fade-in">
+          <div class="product-image">
+            <img src="{{ product.featured_image | img_url: '400x' }}" alt="{{ product.title }}">
+            {% if product.tags contains 'NUEVO' %}
+              <div class="product-badge">NUEVO</div>
+            {% endif %}
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">{{ product.title }}</h3>
+            <div class="product-price">
+              <span class="current-price">{{ product.price | money }}</span>
+              {% if product.compare_at_price > product.price %}
+                <span class="original-price">{{ product.compare_at_price | money }}</span>
+                <span class="discount">-{{ 100 | minus: product.price | times: 100 | divided_by: product.compare_at_price | round }}%</span>
+              {% endif %}
+            </div>
+            <button class="add-to-cart">Agregar al Carrito</button>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+{% else %}
+  <section class="products">
+    <div class="products-header">
+      <h2 class="products-title">{{ section.settings.title }}</h2>
+    </div>
+    <p style="text-align:center;color:#402C1A;font-size:18px;margin:40px 0;">No hay productos en la colección seleccionada.</p>
+  </section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Productos Destacados",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Colección destacada"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Productos Destacados"
+    }
+  ]
+}
+{% endschema %}
