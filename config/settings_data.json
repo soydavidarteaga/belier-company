@@ -50,7 +50,7 @@
       "products": {
         "type": "products",
         "settings": {
-          "collection": "lencerias",
+          "collection": "frontpage",
           "title": "Productos Destacados"
         }
       },
@@ -63,7 +63,7 @@
         "settings": {
           "title": "Featured Collection",
           "description": "",
-          "collection": "",
+          "collection": "frontpage",
           "products_to_show": 4,
           "show_view_all": true
         }
